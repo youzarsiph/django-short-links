@@ -1,0 +1,19 @@
+{% extends 'url_cutter/base.html' %} {% load i18n %} 
+{% block title %}{% translate 'URL Cutter' %}{% endblock %} 
+{% block body_attrs %}class="overflow-hidden bg-dark text-white"{% endblock %}
+{% block main %}
+<div class="container d-flex align-items-center justify-content-between overflow-hidden" style="height: 100vh">
+    <div>
+        <h1 class="display-1 fw-bold mb-5">{% translate 'URL Cutter' %}</h1>
+        <p class="lead mb-5">
+            {% blocktranslate %} 
+                URL Shortener web application written in python & django.
+            {% endblocktranslate %}
+        </p>
+        <a class="btn btn-lg btn-outline-light" href="httpd://github.com/youzarsiph/url_cutter.git">
+            <i class="bi bi-github"></i>
+            {% translate 'Github' %}
+        </a>
+    </div>
+</div>
+{% endblock %}
