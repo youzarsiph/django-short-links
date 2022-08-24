@@ -1,19 +1,53 @@
-{% extends 'url_cutter/base.html' %} {% load i18n %} 
-{% block title %}{% translate 'URL Cutter' %}{% endblock %} 
+{% extends 'url_cutter/base.html' %} {% load i18n %}
+{% block title %}{% translate 'URL Cutter' %}{% endblock %}
 {% block body_attrs %}class="overflow-hidden bg-dark text-white"{% endblock %}
 {% block main %}
-<div class="container d-flex align-items-center justify-content-between overflow-hidden" style="height: 100vh">
-    <div>
-        <h1 class="display-1 fw-bold mb-5">{% translate 'URL Cutter' %}</h1>
-        <p class="lead mb-5">
-            {% blocktranslate %} 
-                URL Shortener web application written in python & django.
-            {% endblocktranslate %}
-        </p>
-        <a class="btn btn-lg btn-outline-light d-block d-md-inline-block" href="https://github.com/youzarsiph/url_cutter.git">
-            <i class="bi bi-github"></i>
-            {% translate 'Github' %}
-        </a>
+    <div class="container d-flex align-items-center justify-content-between overflow-hidden" style="height: 100vh">
+        <div class="w-100">
+            <h1 class="display-1 fw-bold mb-5">
+                <a href="{% url 'url_cutter:index' %}" class="text-white text-decoration-none">
+                    {% translate 'URL Cutter' %}
+                </a>
+            </h1>
+            {% block content %}
+                <p class="lead mb-5">
+                    {% blocktranslate %}
+                        URL Shortener web application written in python & django.
+                    {% endblocktranslate %}
+                </p>
+                {% if form.errors %}
+                    <div class="text-white p-3 border rounded-3" role="alert">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+                <form method='post' action='{% url 'url_cutter:create_url' %}' class="my-5">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input type="url" name="url" maxlength="200" required id="id_url"
+                                   placeholder="{% translate 'Enter the URL to be shortened' %}"
+                                   class="form-control bg-dark text-white"
+                                   value="{{ url.value }}"
+                            >
+                            <label for="id_url" class="form-label">
+                                {% translate 'URL' %}
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-outline-primary">
+                            <i class="bi bi-scissors me-4"></i>
+                            {% translate 'Cut' %}
+                        </button>
+                    </div>
+                    <small>
+                        {% translate 'The URL to be shortened' %}
+                    </small>
+                </form>
+                <a class="btn btn-lg btn-outline-light d-block d-md-inline-block"
+                   href="https://github.com/youzarsiph/url_cutter.git">
+                    <i class="bi bi-github me-4"></i>
+                    {% translate 'Github' %}
+                </a>
+            {% endblock %}
+        </div>
     </div>
-</div>
 {% endblock %}
