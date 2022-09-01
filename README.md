@@ -6,7 +6,7 @@ url_cutter is a url shortening web application written in python and django.
 
 # Getting Started
 
-First of all start a project:
+First start a project:
 
 ```shell
 django-admin startproject mysite
@@ -29,6 +29,26 @@ Run the server:
 
 ```shell
 python manage.py runserver
+```
+
+Change the site_name, in `url_cutter/views.py`:
+
+```python
+...
+
+
+class URLDetailView(DetailView):
+    model = URL
+    pk_url_kwarg = 'id'
+    template_name = 'url_cutter/detail.html'
+    extra_context = {
+        # This site_name is for example
+        # CHANGE this line, replace it with your domain
+        'site_name': 'https://youzarsiph.pythonanywhere.com/url_cutter/'
+    }
+
+
+...
 ```
 
 I hope that you find this useful.

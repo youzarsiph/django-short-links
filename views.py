@@ -72,7 +72,7 @@ class URLDetailView(DetailView):
     template_name = 'url_cutter/detail.html'
     extra_context = {
         # This site_name is for example
-        'site_name': 'https://urlcutter.com/'
+        'site_name': 'https://youzarsiph.pythonanywhere.com/url_cutter/'
     }
 
 
