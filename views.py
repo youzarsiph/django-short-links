@@ -1,12 +1,13 @@
-import random
-from hashlib import sha512
-from url_cutter.models import URL
-from url_cutter.forms import URLForm
-from django.urls import reverse_lazy
-from django.shortcuts import redirect
-from django.core.exceptions import ObjectDoesNotExist
+import secrets
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView
+
+from url_cutter.forms import URLForm
+from url_cutter.models import URL
 
 
 # Create your views here.
@@ -39,24 +40,10 @@ class URLCreateView(LoginRequiredMixin, CreateView):
 
         # Save without committing
         instance = form.save(commit=False)
+
+        # Set user and url token
         instance.user = self.request.user
-
-        # String for computing the hash
-        hash_string = str(self.request.user.password)
-        hash_string += str(self.request.user.get_full_name())
-        hash_string += str(instance.url) + str(self.request.user)
-
-        # Compute sha512 hash
-        result = str(sha512(hash_string.encode()).hexdigest())
-        # print(result)
-
-        # Compute the shortened url id and assign it
-        shortened = ''
-        for i in range(10):
-            letter = result[random.randint(0, len(str(result))) - 1]
-            shortened += letter.upper() if random.randint(0, 1) and letter.isalpha() else letter
-
-        instance.shortened = shortened
+        instance.shortened = secrets.token_urlsafe(7)
 
         # Save the object
         instance.save()
