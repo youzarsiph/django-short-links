@@ -45,6 +45,7 @@ class URLDetailView(DetailView):
         # This site_name is for example
         # CHANGE this line, replace it with your domain
         'site_name': 'https://youzarsiph.pythonanywhere.com/url_cutter/'
+        # 'site_name': 'https://your.domain.com/'
     }
 
 

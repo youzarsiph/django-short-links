@@ -1,6 +1,5 @@
 import secrets
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -18,7 +17,7 @@ class Index(TemplateView):
     }
 
 
-class URLCreateView(LoginRequiredMixin, CreateView):
+class URLCreateView(CreateView):
     model = URL
     form_class = URLForm
     template_name = "url_cutter/index.html"
@@ -60,6 +59,7 @@ class URLDetailView(DetailView):
     extra_context = {
         # This site_name is for example
         'site_name': 'https://youzarsiph.pythonanywhere.com/url_cutter/'
+        # 'site_name': 'https://your.domain.com/url_cutter/'
     }
 
 
