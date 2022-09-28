@@ -8,31 +8,34 @@
     <p class="lead">
         {% translate 'Your shortened URL for ' %}{{ url.url }}{% translate ' is:' %}
     </p>
-    <div class="input-group mb-5">
-        <div class="form-floating">
-            <input
-                    type="url"
-                    id="shortened"
-                    name="shortened"
-                    class="form-control bg-dark text-white"
-                    value="{{ site_name }}{{ url.shortened }}/"
+    <div class="mb-5">
+        <div class="input-group">
+            <div class="form-floating">
+                <input
+                        type="url"
+                        id="shortened"
+                        name="shortened"
+                        class="form-control bg-dark text-white"
+                        value="{{ site_name }}{{ url.shortened }}/"
+                >
+                <label for="shortened">
+                    {% translate 'Shortened URL' %}
+                </label>
+            </div>
+            <button
+                    id="copy-btn"
+                    type="button"
+                    onclick="inform()"
+                    class="btn btn-lg btn-outline-primary"
+                    data-clipboard-text="{{ site_name }}{{ url.shortened }}/"
             >
-            <label for="shortened">
-                {% translate 'Shortened URL' %}
-            </label>
+                <i class="bi bi-clipboard me-4"></i>
+                {% translate 'Copy' %}
+            </button>
         </div>
-        <button
-                id="copy-btn"
-                type="button"
-                onclick="inform()"
-                data-bs-toggle="tooltip"
-                data-bs-placement="left"
-                class="btn btn-lg btn-outline-primary"
-                data-clipboard-text="{{ site_name }}{{ url.shortened }}/"
-        >
-            <i class="bi bi-clipboard me-4"></i>
-            {% translate 'Copy' %}
-        </button>
+        <small class="text-muted">
+            {{ url.clicks }} {% translate 'Clicks' %}
+        </small>
     </div>
     <div class="d-grid d-md-flex align-items-center gap-4 my-5">
         <a class="btn btn-lg btn-outline-success"

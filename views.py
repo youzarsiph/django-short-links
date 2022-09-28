@@ -69,4 +69,6 @@ class ServeURL(DetailView):
 
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
+        instance.clicks = instance.clicks + 1
+        instance.save()
         return redirect(instance.url)
