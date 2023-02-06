@@ -1,8 +1,11 @@
+""" Views """
+
+
 import secrets
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView, CreateView, DetailView
 
 from url_cutter.forms import URLForm
@@ -11,6 +14,8 @@ from url_cutter.models import URL
 
 # Create your views here.
 class Index(TemplateView):
+    """ Index page """
+
     template_name = 'url_cutter/index.html'
     extra_context = {
         'form': URLForm()
@@ -18,21 +23,22 @@ class Index(TemplateView):
 
 
 class URLCreateView(CreateView):
+    """ URL CreateView """
+
     model = URL
     form_class = URLForm
     template_name = "url_cutter/index.html"
     success_url = reverse_lazy('url_cutter:index')
 
     def post(self, request, *args, **kwargs):
-        """
-        If the submitted url exists in the database, redirect the user to detail page of the existing object
-        else create the URL object.
-         """
+        """ Redirect to details or create new instance """
+
         try:
             url = URL.objects.get(url=request.POST['url'])
             return redirect(reverse_lazy('url_cutter:url_detail', args=[url.id]))
+
         except ObjectDoesNotExist:
-            return super(URLCreateView, self).post(request, *args, **kwargs)
+            return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         """ Compute the shortened url """
@@ -53,6 +59,8 @@ class URLCreateView(CreateView):
 
 
 class URLDetailView(DetailView):
+    """ URL Details """
+
     model = URL
     pk_url_kwarg = 'id'
     template_name = 'url_cutter/detail.html'
@@ -64,10 +72,14 @@ class URLDetailView(DetailView):
 
 
 class ServeURL(DetailView):
+    """ Redirect URLs """
+
     model = URL
     slug_field = 'shortened'
 
     def get(self, request, *args, **kwargs):
+        """ Redirect urls """
+
         instance = self.get_object()
         instance.clicks = instance.clicks + 1
         instance.save()

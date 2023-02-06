@@ -1,5 +1,9 @@
+""" URLConf """
+
+
 from django.urls import path
 from url_cutter.views import Index, URLCreateView, URLDetailView, ServeURL
+
 
 app_name = 'url_cutter'
 
