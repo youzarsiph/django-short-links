@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "django-short-links"
-version = "0.1.1"
+version = "0.1.2"
 description = "URL shortener Django app"
 authors = ["Yousef Abu Shanab <josephyousef249@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "links" }]
-homepage = "https://github.com/youzarsiph/django-links/"
-repository = "https://github.com/youzarsiph/django-links/"
+homepage = "https://github.com/youzarsiph/django-short-links/"
+repository = "https://github.com/youzarsiph/django-short-links/"
 
 [tool.poetry.dependencies]
 python = "^3.9"

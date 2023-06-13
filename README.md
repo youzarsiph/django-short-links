@@ -21,8 +21,8 @@ INSTALLED_APPS = [
     ...
 ]
 
-# Your server's IP address with route of 'links.urls' appended to the end without trailing slash
-LINKS_SITE_URL = 'https://your.domain.com/l'
+# Your server's IP address without trailing slash
+LINKS_SITE_URL = 'https://your.domain.com'
 ```
 
 Include `links` URLConf, in project's `urls.py`:

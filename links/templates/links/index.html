@@ -1,5 +1,5 @@
 {% extends 'links/base.html' %} {% load i18n %}
-{% block title %}{% translate 'Links | URL shortener web app' %}{% endblock %}
+{% block title %}{% translate 'Links | URL shortener' %}{% endblock %}
 {% block body_attrs %}class="overflow-hidden"{% endblock %}
 {% block main %}
 <div class="container d-flex align-items-center justify-content-between overflow-hidden" style="height: 100vh">
@@ -12,7 +12,7 @@
     {% block content %}
     <p class="lead mb-4">
       {% blocktranslate %}
-      URL shortener Django app.
+      A Django app that allows users to shorten long urls.
       {% endblocktranslate %}
     </p>
     {% if form.errors %}
