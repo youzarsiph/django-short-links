@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "django-links"
-version = "0.1.0"
+name = "django-short-links"
+version = "0.1.1"
 description = "URL shortener Django app"
 authors = ["Yousef Abu Shanab <josephyousef249@gmail.com>"]
 license = "MIT"
