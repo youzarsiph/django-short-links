@@ -1,0 +1,44 @@
+{% extends 'links/index.html' %}
+{% load i18n %}
+{% block title %}{% translate 'Links | URL details' %}{% endblock %}
+{% block content %}
+<h2 class="mb-4">
+  {% translate 'Success!' %}
+</h2>
+<p class="lead">
+  {% translate 'Your URL shortened' %}
+</p>
+<div class="card card-body p-4 rounded-4 shadow">
+  <h3 class="card-title">Shortened URL</h3>
+  <p class="card-text lead">
+    {{ site_url }}{% url 'links:redirect' url.token %}
+  </p>
+  <div class="d-grid d-md-flex align-items-center justify-content-lg-around gap-4">
+    <button id="copy-btn" type="button" onclick="inform()" class="btn btn-lg btn-primary w-100"
+      data-clipboard-text="{{ site_url }}{% url 'links:redirect' url.token %}">
+      <i class="bi bi-clipboard me-3"></i>
+      {% translate 'Copy' %}
+    </button>
+    <a class="btn btn-lg btn-success w-100" href="{% url 'links:redirect' url.token %}" target="_blank">
+      <i class="bi bi-check-lg me-3"></i>
+      {% translate 'Verify' %}
+    </a>
+    <a class="btn btn-lg btn-dark w-100" href="{% url 'links:index' %}">
+      <i class="bi bi-house me-3"></i>
+      {% translate 'Home' %}
+    </a>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+  integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  const copyBtn = new ClipboardJS('#copy-btn')
+
+  const btn = document.getElementById('copy-btn')
+
+  const inform = () => btn.innerHTML = '<i class="bi bi-clipboard-check me-4"></i> {% translate "Copied" %}'
+</script>
+{% endblock %}

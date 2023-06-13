@@ -1,55 +1,48 @@
-# url_cutter
+# links
 
-URL shortener
+URL / Link shortener web app.
 
-url_cutter is a url shortening web application written in python and django.
+## Getting Started
 
-# Getting Started
-
-First start a project:
+Install `links`:
 
 ```shell
-django-admin startproject mysite
-cd mysite
+pip install django-links
 ```
 
-Clone the repo:
+Add `links` to `INSTALLED_APPS` and add a new setting `LINKS_SITE_NAME`, in `settings.py`:
 
-```shell
-git clone https://github.com/youzarsiph/url_cutter.git
+```python
+# settings.py
+
+INSTALLED_APPS = [
+    ...
+    'links',
+    ...
+]
+
+# Your server's IP address with route of 'links.urls' appended to the end without trailing slash
+LINKS_SITE_URL = 'https://your.domain.com/l'
 ```
 
-Run the migrations:
+Include `links` URLConf, in project's `urls.py`:
+
+```python
+# urls.py
+
+urlpatterns = [
+    ...
+    path('l/', include('links.urls')),
+    ...
+]
+```
+
+Run `migrate`:
 
 ```shell
 python manage.py migrate
 ```
 
-Run the server:
-
-```shell
-python manage.py runserver
-```
-
-Change the site_name, in `url_cutter/views.py`:
-
-```python
-...
-
-
-class URLDetailView(DetailView):
-    model = URL
-    pk_url_kwarg = 'id'
-    template_name = 'url_cutter/detail.html'
-    extra_context = {
-        # This site_name is for example
-        # CHANGE this line, replace it with your domain
-        'site_name': 'https://youzarsiph.pythonanywhere.com/url_cutter/'
-        # 'site_name': 'https://your.domain.com/'
-    }
-
-
-...
-```
+Now, you can open your browser at `https://your.domain.com/l/`.
 
 I hope that you find this useful.

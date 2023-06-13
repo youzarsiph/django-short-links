@@ -4,8 +4,8 @@
 from django.apps import AppConfig
 
 
-class UrlCutterConfig(AppConfig):
-    """ Configuration for url_cutter """
+class LinksConfig(AppConfig):
+    """ Configuration for links """
 
-    name = 'url_cutter'
+    name = 'links'
     default_auto_field = 'django.db.models.BigAutoField'

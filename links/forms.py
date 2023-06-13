@@ -2,7 +2,7 @@
 
 
 from django import forms
-from url_cutter.models import URL
+from links.models import URL
 
 
 class URLForm(forms.ModelForm):

@@ -2,7 +2,7 @@
 
 
 from django.contrib import admin
-from url_cutter.models import URL
+from links.models import URL
 
 
 # Register your models here.
