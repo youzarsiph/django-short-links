@@ -1,0 +1,63 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white rounded-4 m-2 p-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'links:index' %}">
+      <strong>{% translate 'Links' %}</strong>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+      aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-4 gap-lg-2" href="{% url 'links:index' %}">
+            <i class="bi bi-house"></i>
+            {% translate 'Home' %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-4 gap-lg-2" href="{% url 'links:url_list' %}">
+            <i class="bi bi-link-45deg"></i>
+            {% translate 'My Links' %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-4 gap-lg-2" href="{% url 'links:create_url' %}">
+            <i class="bi bi-plus-lg"></i>
+            {% translate 'New Link' %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-4 gap-lg-2"
+            href="https://github.com/youzarsiph/django-short-links.git">
+            <i class="bi bi-github"></i>
+            {% translate 'Github' %}
+          </a>
+        </li>
+        <li class="nav-item">
+          {% if request.user.is_authenticated %}
+          <a class="nav-link d-flex align-items-center gap-4 gap-lg-2" href="{% url 'logout' %}">
+            <i class="bi bi-box-arrow-right"></i>
+            {% translate 'Log out' %}
+          </a>
+          {% else %}
+          <a class="nav-link d-flex align-items-center gap-4 gap-lg-2" href="{% url 'login' %}">
+            <i class="bi bi-box-arrow-in-right"></i>
+            {% translate 'Log in' %}
+          </a>
+          {% endif %}
+        </li>
+      </ul>
+      {% if request.user.is_authenticated %}
+      <ul class="navbar-nav">
+        <li>
+          <div class="card card-body bg-dark fw-bold rounded-5 text-white py-2 px-3 text-center">
+            {{request.user.username|capfirst}}
+          </div>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>

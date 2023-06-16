@@ -12,15 +12,22 @@ User = get_user_model()
 class URL(models.Model):
     """ URLs """
 
+    # The owner of shortened url
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        help_text='The owner'
+    )
     url = models.URLField(
         unique=True,
         db_index=True,
-        help_text='The URL to be shortened'
+        help_text='The link to be shortened'
     )
     token = models.CharField(
         max_length=10,
         unique=True,
-        db_index=True
+        db_index=True,
+        help_text='Link token'
     )
     clicks = models.BigIntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)

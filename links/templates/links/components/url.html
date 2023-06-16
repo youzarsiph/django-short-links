@@ -1,0 +1,81 @@
+{% load i18n %}
+
+<div class="card card-body p-4 rounded-4 border-0">
+  <div class="d-flex flex-row align-items-center justify-content-between mb-4">
+    <h3 class="mb-0">Link #{{ forloop.counter }}</h3>
+    <div class="dropdown">
+      <a href="#" class="btn btn-sm btn-light rounded-3" data-bs-toggle="dropdown">
+        <i class="bi bi-three-dots"></i>
+      </a>
+      <ul class="dropdown-menu rounded-3 border-0 shadow-sm">
+        <li>
+          <h4 class="dropdown-header mb-0">
+            {% translate 'Options' %}
+          </h4>
+        </li>
+        <li>
+          <a href="{% url 'links:redirect' url.token %}" target="_blank"
+            class="dropdown-item d-flex flex-row align-items-center gap-4">
+            <i class="bi bi-box-arrow-up-right"></i>
+            <span class="dropdown-item-text">
+              {% translate 'Click' %}
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'links:url_detail' url.id %}" class="dropdown-item d-flex flex-row align-items-center gap-4">
+            <i class="bi bi-info-lg"></i>
+            <span class="dropdown-item-text">
+              {% translate 'Details' %}
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'links:update_url' url.id %}" class="dropdown-item d-flex flex-row align-items-center gap-4">
+            <i class="bi bi-pencil"></i>
+            <span class="dropdown-item-text">
+              {% translate 'Edit link' %}
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="onClick('{{ url.id }}')"
+            class="dropdown-item d-flex flex-row align-items-center gap-4">
+            <i class="bi bi-trash"></i>
+            <span class="dropdown-item-text">
+              {% translate 'Delete link' %}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-txt mb-4">
+    <p class="lead">{{ url.url }}</p>
+    <ul class="list-unstyled">
+      <li>
+        <small class="text-muted">
+          {% translate 'Clicks: ' %} {{ url.clicks }}
+        </small>
+      </li>
+      <li>
+        <small class="text-muted">
+          {% translate 'Created: ' %} {{ url.created_at }}
+        </small>
+      </li>
+      <li>
+        <small class="text-muted">
+          {% translate 'Last update: ' %} {{ url.updated_at }}
+        </small>
+      </li>
+    </ul>
+  </div>
+  <div class="card card-body p-4 rounded-4 d-flex flex-row align-items-center justify-content-between gap-4 bg-light border-0">
+    <p class="mb-0">{{ site_url }}{% url 'links:redirect' url.token %}</p>
+    <button id="copy-btn-{{ url.id }}" type="button" onclick="inform('copy-btn-{{ url.id }}')"
+      class="btn btn-outline-dark shadow-sm rounded-3 fw-bold"
+      data-clipboard-text="{{ site_url }}{% url 'links:redirect' url.token %}">
+      <i class="bi bi-clipboard"></i>
+    </button>
+  </div>
+</div>

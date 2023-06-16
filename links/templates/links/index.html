@@ -1,49 +1,85 @@
-{% extends 'links/base.html' %} {% load i18n %}
-{% block title %}{% translate 'Links | URL shortener' %}{% endblock %}
-{% block body_attrs %}class="overflow-hidden"{% endblock %}
+{% extends 'links/base.html' %}
+{% load i18n %}
+{% block title %}{% translate 'Links | Link shortener' %}{% endblock %}
+{% block body_attrs %}class="bg-light"{% endblock %}
+{% block header %}
+{% include 'links/components/navbar.html' %}
+{% endblock %}
 {% block main %}
-<div class="container d-flex align-items-center justify-content-between overflow-hidden" style="height: 100vh">
-  <div class="w-100">
-    <h1 class="display-1 fw-bold mb-4">
-      <a href="{% url 'links:index' %}" class="text-decoration-none">
-        {% translate 'Links' %}
-      </a>
-    </h1>
+<div class="container d-flex align-items-center justify-content-between">
+  <div class="w-100 py-5">
+    {% if messages %}w
+    {% include 'links/components/messages.html' %}
+    {% endif %}
+
     {% block content %}
+    <h1 class="display-1">
+      <strong>{% translate 'Links' %}</strong>
+    </h1>
     <p class="lead mb-4">
       {% blocktranslate %}
-      A Django app that allows users to shorten long urls.
+      An app that allows users to shorten long urls.
       {% endblocktranslate %}
     </p>
-    {% if form.errors %}
-    <div class="text-white p-3 border rounded-3" role="alert">
-      {{ form.errors }}
-    </div>
-    {% endif %}
-    <div class="card card-body p-4 rounded-4 shadow mb-5">
-      <h2 class="mb-4">Shorten URL</h2>
-      <form method="post" action="{% url 'links:create_url' %}">
-        {% csrf_token %}
-        <div class="form-floating mb-4">
-          <input type="url" name="url" maxlength="200" required id="id_url" placeholder="{% translate 'URL' %}"
-            class="form-control" value="{{ url.value }}">
-          <label for="id_url" class="form-label">
-            {% translate 'URL' %}
-          </label>
-          <small>
-            {% translate 'The URL to be shortened' %}
-          </small>
+    <section class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card card-body p-4 rounded-4 border-0">
+          <h2 class="mb-4">
+            {% translate 'Open Source' %}
+          </h2>
+          <p class="lead mb-4">
+            {% blocktranslate %}
+            Links is an open source fast, scalable, secure web app built using Python and Django.
+            {% endblocktranslate %}
+          </p>
+          <a class="btn btn-lg btn-dark w-100 shadow-sm rounded-3 fw-bold"
+            href="https://github.com/youzarsiph/django-short-links.git">
+            <i class="bi bi-github me-3"></i>
+            {% translate 'Github' %}
+          </a>
         </div>
-        <button type="submit" class="btn btn-lg btn-primary w-100">
-          <i class="bi bi-scissors me-3"></i>
-          {% translate 'Cut' %}
-        </button>
-      </form>
-    </div>
-    <a class="btn btn-lg btn-dark w-100" href="https://github.com/youzarsiph/django-links.git">
-      <i class="bi bi-github me-3"></i>
-      {% translate 'Github' %}
-    </a>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card card-body p-4 rounded-4 border-0">
+          <h2 class="mb-4">
+            {% translate 'Link Management' %}
+          </h2>
+          <p class="lead mb-4">
+            {% blocktranslate %}
+            Links allows you to manage your shortened links and track performance.
+            {% endblocktranslate %}
+          </p>
+          <a class="btn btn-lg btn-dark w-100 shadow-sm rounded-3 fw-bold" href="{% url 'links:url_list' %}">
+            <i class="bi bi-eye me-3"></i>
+            {% translate 'View' %}
+          </a>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card card-body p-4 rounded-4 border-0">
+          <h2 class="mb-4">
+            {% translate 'Give it a try' %}
+          </h2>
+          <form method="post" action="{% url 'links:create_url' %}">
+            {% csrf_token %}
+            <div class="form-floating mb-4">
+              <input type="url" name="url" maxlength="200" required id="id_url" placeholder="{% translate 'Link' %}"
+                class="form-control" value="{{ url.value }}">
+              <label for="id_url" class="form-label">
+                {% translate 'Link' %}
+              </label>
+              <small class="text-muted">
+                {% translate 'The link to be shortened' %}
+              </small>
+            </div>
+            <button type="submit" class="btn btn-lg btn-dark w-100 shadow-sm rounded-3 fw-bold">
+              <i class="bi bi-scissors me-3"></i>
+              {% translate 'Submit' %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
     {% endblock %}
   </div>
 </div>

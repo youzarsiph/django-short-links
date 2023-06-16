@@ -1,0 +1,9 @@
+<ul class="list-unstyled mb-0">
+  {% for message in messages %}
+  <li class="alert alert-{{ message.tags }} d-flex align-items-center p-4 gap-4 shadow-sm rounded-4 alert-dismissible">
+    <span class="badge bg-{{ message.tags }}">{{ message.tags|capfirst }}</span>
+    {{ message }}
+    <button type="button" class="btn-close rounded-4" data-bs-dismiss="alert" aria-label="Close"></button>
+  </li>
+  {% endfor %}
+</ul>

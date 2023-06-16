@@ -1,0 +1,36 @@
+{% extends 'links/index.html' %}
+{% load i18n %}
+{% block title %}{% translate 'Links | Create Link' %}{% endblock %}
+{% block content %}
+<div class="card card-body p-4 rounded-4 border-0">
+  <h2 class="mb-4">
+    {% translate 'Create Link' %}
+  </h2>
+  {% if form.errors %}
+  <div class="alert alert-danger rounded-4 shadow-sm" role="alert">
+    <div class="badge bg-danger">{% translate 'Error' %}</div>
+    {{ form.errors }}
+  </div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-floating mb-4">
+      {{ form.url }}
+      {{ form.url.label_tag }}
+      <small class="text-muted">
+        {{ form.url.help_text }}
+      </small>
+    </div>
+
+    <button type="submit" class="btn btn-lg btn-dark w-100 shadow-sm rounded-3 fw-bold">
+      {% translate 'Create' %}
+    </button>
+  </form>
+</div>
+{% endblock %}
+{% block footer %}
+<script>
+  document.querySelectorAll('label').forEach(i => i.classList.add('form-label'))
+  document.querySelectorAll('input').forEach(i => i.classList.add('form-control'))
+</script>
+{% endblock %}

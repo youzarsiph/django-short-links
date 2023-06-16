@@ -1,0 +1,63 @@
+{% extends 'links/index.html' %}
+{% load i18n %}
+{% block title %}{% translate 'Links | Login' %}{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+  <div class="col-12 col-md-6 col-lg-4">
+    <h1 class="display-1 mb-4">
+      {% translate 'Links' %}
+    </h1>
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>
+      {% blocktranslate %}
+      Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.
+      {% endblocktranslate %}
+    </p>
+    {% else %}
+    <p>
+      {% translate 'Please login to see this page.' %}
+    </p>
+    {% endif %}
+    {% endif %}
+    <div class="card card-body p-4 border-0 rounded-4">
+      <h2 class="mb-4">{% translate 'Login' %}</h2>
+      <p class="lead mb-4 text-center">
+        {% translate 'Login to start using Links' %}
+      </p>
+      {% if form.errors %}
+      <div class="alert alert-danger rounded-4 shadow-sm" role="alert">
+        <div class="badge bg-danger">{% translate 'Error' %}</div>
+        {% translate 'Please enter a correct username and password. Note that both fields may be case-sensitive.' %}
+      </div>
+      {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="form-floating mb-4">
+          {{ form.username }}
+          {{ form.username.label_tag }}
+          <small class="text-muted">
+            {{ form.username.help_text }}
+          </small>
+        </div>
+        <div class="form-floating mb-4">
+          {{ form.password }}
+          {{ form.password.label_tag }}
+          <small class="text-muted">
+            {{ form.password.help_text }}
+          </small>
+        </div>
+        <button type="submit" class="btn btn-lg btn-dark shadow-sm rounded-3 fw-bold w-100">
+          {% translate 'Submit' %}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('form label').forEach(i => i.classList.add('form-label'))
+  document.querySelectorAll('form input').forEach(i => i.classList.add('form-control'))
+</script>
+{% endblock %}

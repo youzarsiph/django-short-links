@@ -6,26 +6,29 @@
   {% translate 'Success!' %}
 </h2>
 <p class="lead">
-  {% translate 'Your URL shortened' %}
+  {% translate 'Your link shortened' %}
 </p>
-<div class="card card-body p-4 rounded-4 shadow">
-  <h3 class="card-title">Shortened URL</h3>
+<div class="card card-body p-4 rounded-4 border-0">
+  <h3 class="card-title">Shortened Link</h3>
   <p class="card-text lead">
     {{ site_url }}{% url 'links:redirect' url.token %}
   </p>
   <div class="d-grid d-md-flex align-items-center justify-content-lg-around gap-4">
-    <button id="copy-btn" type="button" onclick="inform()" class="btn btn-lg btn-primary w-100"
+    <button id="copy-btn" type="button" onclick="inform()" class="btn btn-lg btn-dark w-100 shadow-sm rounded-3 fw-bold"
       data-clipboard-text="{{ site_url }}{% url 'links:redirect' url.token %}">
       <i class="bi bi-clipboard me-3"></i>
       {% translate 'Copy' %}
     </button>
-    <a class="btn btn-lg btn-success w-100" href="{% url 'links:redirect' url.token %}" target="_blank">
+    {% if request.user == url.user %}
+    <a class="btn btn-lg btn-light w-100 shadow-sm rounded-3 fw-bold" href="{% url 'links:update_url' url.id %}">
+      <i class="bi bi-pencil me-3"></i>
+      {% translate 'Change token' %}
+    </a>
+    {% endif %}
+    <a class="btn btn-lg btn-success w-100 shadow-sm rounded-3 fw-bold" href="{% url 'links:redirect' url.token %}"
+      target="_blank">
       <i class="bi bi-check-lg me-3"></i>
       {% translate 'Verify' %}
-    </a>
-    <a class="btn btn-lg btn-dark w-100" href="{% url 'links:index' %}">
-      <i class="bi bi-house me-3"></i>
-      {% translate 'Home' %}
     </a>
   </div>
 </div>
@@ -39,6 +42,12 @@
 
   const btn = document.getElementById('copy-btn')
 
-  const inform = () => btn.innerHTML = '<i class="bi bi-clipboard-check me-4"></i> {% translate "Copied" %}'
+  const inform = () => {
+    btn.innerHTML = '<i class="bi bi-clipboard-check-fill me-3 text-success"></i> <span class="text-success">{% translate "Copied" %}</span>'
+
+    setTimeout(() => {
+      btn.innerHTML = '<i class="bi bi-clipboard me-3"></i> {% translate "Copy" %}'
+    }, 2000);
+  }
 </script>
 {% endblock %}

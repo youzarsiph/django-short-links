@@ -2,14 +2,17 @@
 
 
 from django.urls import path
-from links.views import Index, URLCreateView, URLDetailView, ServeURL
+from links import views
 
 
 app_name = 'links'
 
 urlpatterns = [
-    path('', Index.as_view(), name='index'),
-    path('new/', URLCreateView.as_view(), name='create_url'),
-    path('<slug:slug>/', ServeURL.as_view(), name='redirect'),
-    path('<int:id>/result/', URLDetailView.as_view(), name='url_detail'),
+    path('', views.Index.as_view(), name='index'),
+    path('links/', views.URLListView.as_view(), name='url_list'),
+    path('links/new/', views.URLCreateView.as_view(), name='create_url'),
+    path('links/<int:id>/', views.URLDetailView.as_view(), name='url_detail'),
+    path('links/<int:id>/update/', views.URLUpdateView.as_view(), name='update_url'),
+    path('links/<int:id>/delete/', views.URLDeleteView.as_view(), name='delete_url'),
+    path('<slug:slug>/', views.ServeURL.as_view(), name='redirect'),
 ]
