@@ -3,35 +3,56 @@
 {% block title %}{% translate 'Links | URL details' %}{% endblock %}
 {% block content %}
 <h2 class="mb-4">
-  {% translate 'Success!' %}
+  {% translate 'Link Details' %}
 </h2>
-<p class="lead">
-  {% translate 'Your link shortened' %}
-</p>
 <div class="card card-body p-4 rounded-4 border-0">
-  <h3 class="card-title">Shortened Link</h3>
-  <p class="card-text lead">
-    {{ site_url }}{% url 'links:redirect' url.token %}
-  </p>
-  <div class="d-grid d-md-flex align-items-center justify-content-lg-around gap-4">
-    <button id="copy-btn" type="button" onclick="inform()" class="btn btn-lg btn-dark w-100 shadow-sm rounded-3 fw-bold"
+  <h3 class="card-title mb-4">{{ url.url }}</h3>
+  <div
+    class="card card-body p-4 rounded-4 d-flex flex-row align-items-center justify-content-between gap-4 bg-light border-0 mb-4">
+    <p class="mb-0">{{ site_url }}{% url 'links:redirect' url.token %}</p>
+    <button id="copy-btn" type="button" onclick="inform()" class="btn btn-outline-dark shadow-sm rounded-3 fw-bold"
       data-clipboard-text="{{ site_url }}{% url 'links:redirect' url.token %}">
-      <i class="bi bi-clipboard me-3"></i>
-      {% translate 'Copy' %}
+      <i class="bi bi-clipboard"></i>
     </button>
+  </div>
+  <ul class="list-unstyled mb-4">
+    <li>
+      <small class="text-muted">
+        {% translate 'Clicks: ' %} {{ url.clicks }}
+      </small>
+    </li>
+    <li>
+      <small class="text-muted">
+        {% translate 'Created: ' %} {{ url.created_at }}
+      </small>
+    </li>
+    <li>
+      <small class="text-muted">
+        {% translate 'Last update: ' %} {{ url.updated_at }}
+      </small>
+    </li>
+  </ul>
+  <div class="d-grid d-md-flex align-items-center justify-content-lg-around gap-4">
+    <a class="btn btn-lg btn-success w-100 shadow-sm rounded-3 fw-bold" target="_blank"
+      href="{% url 'links:redirect' url.token %}">
+      <i class="bi bi-check-lg me-3"></i>
+      {% translate 'Verify' %}
+    </a>
     {% if request.user == url.user %}
     <a class="btn btn-lg btn-light w-100 shadow-sm rounded-3 fw-bold" href="{% url 'links:update_url' url.id %}">
       <i class="bi bi-pencil me-3"></i>
       {% translate 'Change token' %}
     </a>
+    <button class="btn btn-lg btn-danger w-100 shadow-sm rounded-3 fw-bold" data-bs-toggle="modal"
+      data-bs-target="#deleteModal" onclick="onClick('{{ url.id }}')">
+      <i class="bi bi-trash me-3"></i>
+      {% translate 'Delete' %}
+    </button>
     {% endif %}
-    <a class="btn btn-lg btn-success w-100 shadow-sm rounded-3 fw-bold" href="{% url 'links:redirect' url.token %}"
-      target="_blank">
-      <i class="bi bi-check-lg me-3"></i>
-      {% translate 'Verify' %}
-    </a>
   </div>
 </div>
+
+{% include 'links/components/delete-modal.html' %}
 {% endblock %}
 {% block footer %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
@@ -43,11 +64,17 @@
   const btn = document.getElementById('copy-btn')
 
   const inform = () => {
-    btn.innerHTML = '<i class="bi bi-clipboard-check-fill me-3 text-success"></i> <span class="text-success">{% translate "Copied" %}</span>'
+    btn.innerHTML = '<i class="bi bi-clipboard-check-fill text-success"></i>'
 
     setTimeout(() => {
-      btn.innerHTML = '<i class="bi bi-clipboard me-3"></i> {% translate "Copy" %}'
+      btn.innerHTML = '<i class="bi bi-clipboard"></i>'
     }, 2000);
+  }
+
+  const onClick = (id) => {
+    const form = document.getElementById('deleteForm')
+    form.setAttribute('action', form.getAttribute('action').replace(form.getAttribute('data-last-id'), id))
+    form.setAttribute('data-last-id', id)
   }
 </script>
 {% endblock %}
