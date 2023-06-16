@@ -10,7 +10,7 @@ Install `links`:
 pip install django-short-links
 ```
 
-Add `links` to `INSTALLED_APPS` and add a new setting `LINKS_SITE_NAME`, in `settings.py`:
+Add `links` to `INSTALLED_APPS`. Make sure that `django.contrib.auth` installed, then add a new setting `LINKS_SITE_NAME`, in `settings.py`:
 
 ```python
 # settings.py
@@ -18,6 +18,7 @@ Add `links` to `INSTALLED_APPS` and add a new setting `LINKS_SITE_NAME`, in `set
 INSTALLED_APPS = [
     ...
     'links',
+    'django.contrib.auth',
     ...
 ]
 
@@ -25,7 +26,7 @@ INSTALLED_APPS = [
 LINKS_SITE_URL = 'https://your.domain.com'
 ```
 
-Include `links` URLConf, in project's `urls.py`:
+Include `links` and `django.contrib.auth.urls`, in project's `urls.py`:
 
 ```python
 # urls.py
@@ -33,6 +34,7 @@ Include `links` URLConf, in project's `urls.py`:
 urlpatterns = [
     ...
     path('l/', include('links.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     ...
 ]
 ```
