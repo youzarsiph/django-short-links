@@ -46,10 +46,10 @@
     const copyBtn = new ClipboardJS(`#${id}`)
 
     const btn = document.getElementById(id)
-    btn.innerHTML = '<i class="bi bi-clipboard-check-fill text-success"></i>'
+    btn.innerHTML = '<i class="bi bi-clipboard-check-fill me-3 text-success"></i> <span class="text-success">Copied</span>'
 
     setTimeout(() => {
-      btn.innerHTML = '<i class="bi bi-clipboard"></i>'
+      btn.innerHTML = '<i class="bi bi-clipboard me-3"></i> Copy'
     }, 2000);
   }
 

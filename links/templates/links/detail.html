@@ -7,12 +7,12 @@
 </h2>
 <div class="card card-body p-4 rounded-4 border-0">
   <h3 class="card-title mb-4">{{ url.url }}</h3>
-  <div
-    class="card card-body p-4 rounded-4 d-flex flex-row align-items-center justify-content-between gap-4 bg-light border-0 mb-4">
+  <div class="card card-body p-4 rounded-4 justify-content-between gap-4 bg-light border-0 mb-4 overflow-x-auto">
     <p class="mb-0">{{ site_url }}{% url 'links:redirect' url.token %}</p>
     <button id="copy-btn" type="button" onclick="inform()" class="btn btn-outline-dark shadow-sm rounded-3 fw-bold"
       data-clipboard-text="{{ site_url }}{% url 'links:redirect' url.token %}">
-      <i class="bi bi-clipboard"></i>
+      <i class="bi bi-clipboard me-3"></i>
+      {% translate 'Copy' %}
     </button>
   </div>
   <ul class="list-unstyled mb-4">
@@ -64,10 +64,10 @@
   const btn = document.getElementById('copy-btn')
 
   const inform = () => {
-    btn.innerHTML = '<i class="bi bi-clipboard-check-fill text-success"></i>'
+    btn.innerHTML = '<i class="bi bi-clipboard-check-fill me-3 text-success"></i> <span class="text-success">Copied</span>'
 
     setTimeout(() => {
-      btn.innerHTML = '<i class="bi bi-clipboard"></i>'
+      btn.innerHTML = '<i class="bi bi-clipboard me-3"></i> Copy'
     }, 2000);
   }
 

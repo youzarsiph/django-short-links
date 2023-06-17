@@ -70,12 +70,13 @@
       </li>
     </ul>
   </div>
-  <div class="card card-body p-4 rounded-4 d-flex flex-row align-items-center justify-content-between gap-4 bg-light border-0">
+  <div class="card card-body p-4 rounded-4 justify-content-between gap-4 bg-light border-0 overflow-x-auto">
     <p class="mb-0">{{ site_url }}{% url 'links:redirect' url.token %}</p>
     <button id="copy-btn-{{ url.id }}" type="button" onclick="inform('copy-btn-{{ url.id }}')"
       class="btn btn-outline-dark shadow-sm rounded-3 fw-bold"
       data-clipboard-text="{{ site_url }}{% url 'links:redirect' url.token %}">
-      <i class="bi bi-clipboard"></i>
+      <i class="bi bi-clipboard me-3"></i>
+      {% translate 'Copy' %}
     </button>
   </div>
 </div>
